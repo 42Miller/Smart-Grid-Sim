@@ -5,10 +5,13 @@ class Building:
     def __init__(self):
         pass
         
-    #returns power required in (kW-hr)
-    def getPowerReq(self):
+    #returns power used per year in kW-hrs
+    def getPowerYear(self):
         return self.power_req
-        
+    
+    #returns power used per day in kW-Hrs
+    def getPowerDate(self, date):
+        return self.power_req/365
         
 class House(Building):
     def __init__(self):
