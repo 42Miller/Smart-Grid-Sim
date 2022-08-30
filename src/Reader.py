@@ -1,13 +1,13 @@
 import csv
 import random
-#from datetime import datetime
+from datetime import datetime
 import time
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # FILENAME = "C:/Users/User/Desktop/Smart-Grid-Sim/data/house2_power_blk1.csv"
-# COLORS = ['red', 'darkorange', 'orange', 'gold', 'yellow', 'limegreen', 'green', 'teal', 'blue', 'indigo', 'purple', 'mediumvioletred']
-# LINES = ['solid', 'dashed', 'dotted', 'dashdot']
-# DAYS = {"SUN":0, "MON":1, "TUE":2, "WED":3, "THU":4, "FRI":5, "SAT":6}
+COLORS = ['red', 'darkorange', 'orange', 'gold', 'yellow', 'limegreen', 'green', 'teal', 'blue', 'indigo', 'purple', 'mediumvioletred']
+LINES = ['solid', 'dashed', 'dotted', 'dashdot']
+DAYS = {"SUN":0, "MON":1, "TUE":2, "WED":3, "THU":4, "FRI":5, "SAT":6}
         
 
 
@@ -85,7 +85,6 @@ def readSection(start_index, end_index, file_pointer, percent_variation):
     return output
     
     
-createVariants("C:/Users/User/Desktop/Smart-Grid-Sim/data/test.csv", 1, 0.1, "C:/Users/User/Desktop/Smart-Grid-Sim/data/output.csv")
 
 #     data = [] #data[day][header][time]
 #     day_dup = [False, False, False, False, False, False, False]
@@ -141,47 +140,50 @@ createVariants("C:/Users/User/Desktop/Smart-Grid-Sim/data/test.csv", 1, 0.1, "C:
 
 
 
-# def displayPowerUsage(filename):
-#     with open(filename) as fptr:
-#         csv_reader = csv.reader(fptr, delimiter=",")
-#         row_num = -1
-#     #     current_date = datetime.fromtimestamp(int(list(csv_reader)[1][0])).strftime("%a %d %b %Y")
-#         current_date = ""
-#         x = []
-#         y_arrays = [[]]
-#         count = 0
-#         num_days = 0
-#         for row in csv_reader:
-#             row_num = row_num + 1
-#             if row_num == 0:
-#                 headers = row
-#                 print(headers)
-#                 for n in range(len(headers)-1):
-#                     y_arrays.append([])
-#             else:
-#                 if datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y") != current_date:
-#                     num_days = num_days + 1
-#                     current_date = datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y")
-#                     print(datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y   %H:%M.%S"))
-#                     print("Showing " + str(int(count/(5*60))) + "/" + str(count) + " data points.")
-#                     try:
-#                         c = 0
-#                         for i in range(len(headers)-1):
-#                             plt.plot(x, y_arrays[i], color = COLORS[c%len(COLORS)], linestyle = LINES[int(c/len(COLORS))%len(LINES)], label=headers[i+1])
-#                             c = c + 1
-#                             y_arrays[i].clear()
-#                         plt.legend()
-#                         plt.show()
-#                         x.clear()
-#                     except Exception as e:
-#                         print(e)
-#                     count = 0
-#                 else:
-#                     count = count + 1
-#                     if count % (5*60) == 0:
-#                         x.append(datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y   %H:%M.%S"))
-#                         base = 0
-#                         for i in range(len(headers)-1):
-#                             y_arrays[i].append(base + int(row[i+1]))
-#                             base = base + int(row[i+1])
+def displayPowerUsage(filename):
+    with open(filename) as fptr:
+        csv_reader = csv.reader(fptr, delimiter=",")
+        row_num = -1
+    #     current_date = datetime.fromtimestamp(int(list(csv_reader)[1][0])).strftime("%a %d %b %Y")
+        current_date = ""
+        x = []
+        y_arrays = [[]]
+        count = 0
+        num_days = 0
+        for row in csv_reader:
+            row_num = row_num + 1
+            if row_num == 0:
+                headers = row
+                print(headers)
+                for n in range(len(headers)-1):
+                    y_arrays.append([])
+            else:
+                if datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y") != current_date:
+                    num_days = num_days + 1
+                    current_date = datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y")
+                    print(datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y   %H:%M.%S"))
+                    print("Showing " + str(int(count/(5*60))) + "/" + str(count) + " data points.")
+                    try:
+                        c = 0
+                        for i in range(len(headers)-1):
+                            plt.plot(x, y_arrays[i], color = COLORS[c%len(COLORS)], linestyle = LINES[int(c/len(COLORS))%len(LINES)], label=headers[i+1])
+                            c = c + 1
+                            y_arrays[i].clear()
+                        plt.legend()
+                        plt.show()
+                        x.clear()
+                    except Exception as e:
+                        print(e)
+                    count = 0
+                else:
+                    count = count + 1
+                    if count % (5*60) == 0:
+                        x.append(datetime.fromtimestamp(int(row[0])).strftime("%a %d %b %Y   %H:%M.%S"))
+                        base = 0
+                        for i in range(len(headers)-1):
+                            y_arrays[i].append(base + int(row[i+1]))
+                            base = base + int(row[i+1])
 
+# createVariants("C:/Users/User/Desktop/Smart-Grid-Sim/data/test.csv", 1, 0.1, "C:/Users/User/Desktop/Smart-Grid-Sim/data/output.csv")
+displayPowerUsage("C:/Users/User/Desktop/Smart-Grid-Sim/data/house1_power_blk1.csv")
+# displayPowerUsage("C:/Users/User/Desktop/Smart-Grid-Sim/data/output1.csv")
